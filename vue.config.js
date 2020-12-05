@@ -1,5 +1,10 @@
 module.exports = {
-  "transpileDependencies": [
+  pluginOptions: {
+    electronBuilder: {
+      preload: 'src/preload.js'
+    }
+  },
+  transpileDependencies: [
     "vuetify"
   ]
 }
