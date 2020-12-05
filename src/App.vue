@@ -1,10 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
+    <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
@@ -27,34 +23,44 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+      <v-btn icon text @click="confirmQuitDialog = true">
+        <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-app-bar>
 
     <v-main>
-      <HelloWorld/>
+      <Main />
+      <v-dialog v-model="confirmQuitDialog">
+        <v-card>
+          <v-card-title> Are you sure you want to quit? </v-card-title>
+          <v-row no-gutters class="pa-3">
+            <v-spacer />
+            <v-btn text outlined color="error" @click="confirmQuitDialog = false">Cancel </v-btn>
+            <v-btn text outlined color="primary" class="pl-5" @click="exitProgram()">Quit </v-btn>
+          </v-row>
+        </v-card>
+      </v-dialog>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Main from "./components/Main";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
-    HelloWorld,
+    Main,
   },
 
   data: () => ({
-    //
+    confirmQuitDialog: false,
   }),
+  methods: {
+    exitProgram() {
+      window.ipc.send('quit');
+    },
+  },
 };
 </script>
