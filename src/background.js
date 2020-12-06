@@ -30,7 +30,7 @@ async function createWindow() {
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: true,
+      nodeIntegration: false,
       preload: path.join(__dirname, 'preload.js'),
       enableRemoteModule: true
     }
@@ -153,7 +153,6 @@ ipcMain.on('get-cpu-temp', async () => {
 });
 
 // Poll system info
-setInterval(getNetworkInfo, 1000);
-setInterval(getCPUSpeed, 1000);
-setInterval(getCPUTemp, 1000);
-setInterval(getMemoryInfo, 1000);
+setInterval(getNetworkInfo, 2000);
+setInterval(getCPUSpeed, 10000);
+setInterval(getMemoryInfo, 2000);

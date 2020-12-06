@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-tabs v-model="selectedTab" background-color="transparent" color="basil" grow>
+    <v-tabs v-model="selectedTab" background-color="transparent" color="primary" grow>
       <v-tab v-for="tab in tabs" :key="tab">
         {{ tab }}
       </v-tab>

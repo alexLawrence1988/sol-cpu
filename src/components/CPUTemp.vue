@@ -14,14 +14,14 @@
       justify="center"
     >
       <v-col cols="6">
-        <h3>{{ name }}</h3>
+        <h3 class="overline font-weight-bold">{{ name }}</h3>
       </v-col>
       <v-col cols="6">
         <span>{{ val }}</span>
       </v-col>
     </v-row>
-    <v-overlay v-show="loading"  absolute>
-          <v-progress-circular fixed color="primary" indeterminate />
+    <v-overlay v-show="loading" absolute>
+      <v-progress-circular fixed color="primary" indeterminate />
     </v-overlay>
   </div>
 </template>
