@@ -7,7 +7,7 @@
       </v-btn>
     </v-row>
     <v-row
-      v-for="(val, name) in info"
+      v-for="(val, name) in combinedInfo"
       :key="name"
       no-gutters
       align="center"
@@ -20,8 +20,8 @@
         <span>{{ val }}</span>
       </v-col>
     </v-row>
-    <v-overlay v-show="loading"  absolute>
-          <v-progress-circular fixed color="primary" indeterminate />
+    <v-overlay v-show="loading" absolute>
+      <v-progress-circular fixed color="primary" indeterminate />
     </v-overlay>
   </div>
 </template>
@@ -29,19 +29,30 @@
 export default {
   data: () => ({
     info: {},
+    speed: {},
     loading: false,
   }),
+  computed: {
+    combinedInfo() {
+      return { ...this.info, ...this.speed };
+    },
+  },
   methods: {
     getInfo() {
       this.loading = true;
       window.ipcRenderer.send("get-cpu-info");
+      window.ipcRenderer.send("get-cpu-speed");
     },
   },
   created() {
     window.ipcRenderer.on("cpu-info", (event, data) => {
-      console.log(data);
       this.info = data;
       this.loading = false;
+    });
+
+    window.ipcRenderer.on("cpu-speed", (event, data) => {
+      console.log(data);
+      this.speed = data;
     });
 
     this.getInfo();

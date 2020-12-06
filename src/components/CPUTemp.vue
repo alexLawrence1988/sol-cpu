@@ -39,7 +39,6 @@ export default {
   },
   created() {
     window.ipcRenderer.on("cpu-temp", (event, data) => {
-      console.log(data);
       this.info = data;
       this.loading = false;
     });

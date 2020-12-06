@@ -13,9 +13,11 @@
   },
   "main": "background.js",
   "dependencies": {
+    "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "systeminformation": "^4.30.11",
     "vue": "^2.6.11",
+    "vue2-google-maps": "^0.10.7",
     "vuetify": "^2.2.11"
   },
   "devDependencies": {
@@ -46,7 +48,10 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-debugger": "warn",
+      "no-undef": "warn"
+    }
   },
   "browserslist": [
     "> 1%",

@@ -27,6 +27,7 @@
 
     <v-main>
       <System />
+      <Weather />
       <v-dialog v-model="confirmQuitDialog">
         <v-card>
           <v-card-title> Are you sure you want to quit? </v-card-title>
@@ -50,27 +51,29 @@
 
 <script>
 import System from "./components/System";
+import Weather from "./components/Weather";
 
 export default {
   name: "App",
 
   components: {
     System,
+    Weather
   },
 
   data: () => ({
     confirmQuitDialog: false,
-    maximized: false
+    maximized: false,
   }),
   methods: {
     ipcSend(event) {
       window.ipcRenderer.send(event);
     },
-    maximize(){
-      const event = this.maximized ? 'restore' : 'maximize';
+    maximize() {
+      const event = this.maximized ? "restore" : "maximize";
       this.ipcSend(event);
       this.maximized = !this.maximized;
-    }
+    },
   },
 };
 </script>
@@ -82,5 +85,4 @@ export default {
 .no-drag {
   -webkit-app-region: no-drag;
 }
-
 </style>

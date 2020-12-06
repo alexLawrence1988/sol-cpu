@@ -6,7 +6,7 @@
       </v-tab>
     </v-tabs>
 
-    <v-tabs-items v-model="selectedTab">
+    <v-tabs-items v-model="selectedTab" class="tab-content">
       <v-tab-item v-for="tab in tabs" :key="tab">
         <v-card flat>
           <SystemInfo v-if="tab === 'System Info'" />
@@ -16,14 +16,15 @@
         </v-card>
       </v-tab-item>
     </v-tabs-items>
+    <v-divider />
   </v-container>
 </template>
 
 <script>
 import SystemInfo from "./SystemInfo";
 import NetworkInfo from "./NetworkInfo";
-import CPUInfo from './CPUInfo';
-import CPUTemp from './CPUTemp';
+import CPUInfo from "./CPUInfo";
+import CPUTemp from "./CPUTemp";
 
 export default {
   name: "System",
@@ -31,7 +32,7 @@ export default {
     SystemInfo,
     NetworkInfo,
     CPUInfo,
-    CPUTemp
+    CPUTemp,
   },
   data: () => ({
     datasets: {},
@@ -40,3 +41,10 @@ export default {
   }),
 };
 </script>
+<style scoped>
+
+.tab-content {
+  height: calc(100vh - 285px);
+  overflow: auto;
+}
+</style>

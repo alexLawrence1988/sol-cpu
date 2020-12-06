@@ -18,5 +18,14 @@ export default {
         console.log(err);
       }
     }
+  },
+  speed: {
+    async get() {
+      try {
+        return si.cpuCurrentspeed();
+      } catch (err) {
+        console.log(err);
+      }
+    }
   }
 } 

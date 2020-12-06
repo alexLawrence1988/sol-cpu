@@ -3,12 +3,15 @@
 import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
-import systemInfo from './workers/system';
-import networkInfo from './workers/network';
-import cpu from './workers/cpu';
+import systemInfo from './helpers/system';
+import networkInfo from './helpers/network';
+import cpu from './helpers/cpu';
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const path = require('path')
+// For google api access (geolocation etc)
+process.env.GOOGLE_API_KEY = 'AIzaSyAeCOiuqOZdAf70NbERwoWt2Ao6Iuoo5Z8'
+
 let win;
 
 // Scheme must be registered before the app is ready
@@ -23,7 +26,6 @@ async function createWindow() {
     height: 600,
     titleBarStyle: 'hidden',
     frame: false,
-    resizable: true,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
@@ -89,6 +91,27 @@ if (isDevelopment) {
   }
 }
 
+// Functions to get system info
+const getNetworkInfo = async () => {
+  const info = await networkInfo.get();
+  win.webContents.send('network-info', info);
+}
+
+const getCPUInfo = async () => {
+  const info = await cpu.info.get();
+  win.webContents.send('cpu-info', info);
+}
+
+const getCPUTemp = async () => {
+  const info = await cpu.temperature.get();
+  win.webContents.send('cpu-temp', info);
+}
+
+const getCPUSpeed = async () => {
+  const info = await cpu.speed.get();
+  win.webContents.send('cpu-speed', info);
+}
+
 // IPC event bus handlers
 ipcMain.on('quit', () => {
   app.exit();
@@ -112,16 +135,18 @@ ipcMain.on('get-system-info', async () => {
 });
 
 ipcMain.on('get-network-info', async () => {
-  const info = await networkInfo.get();
-  win.webContents.send('network-info', info);
+  getNetworkInfo();
 });
 
 ipcMain.on('get-cpu-info', async () => {
-  const info = await cpu.info.get();
-  win.webContents.send('cpu-info', info);
+ getCPUInfo();
 });
 
 ipcMain.on('get-cpu-temp', async () => {
-  const info = await cpu.temperature.get();
-  win.webContents.send('cpu-temp', info);
+  getCPUTemp();
 });
+
+// Poll system info
+setInterval(getNetworkInfo, 1000);
+setInterval(getCPUSpeed, 1000);
+setInterval(getCPUTemp, 1000);

@@ -39,7 +39,6 @@ export default {
   },
   created() {
     window.ipcRenderer.on("network-info", (event, data) => {
-      console.log(data);
       this.info = data[0];
       this.loading = false;
     });
