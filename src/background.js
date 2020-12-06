@@ -5,6 +5,7 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import systemInfo from './workers/system';
 import networkInfo from './workers/network';
+import cpu from './workers/cpu';
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const path = require('path')
@@ -113,4 +114,9 @@ ipcMain.on('get-system-info', async () => {
 ipcMain.on('get-network-info', async () => {
   const info = await networkInfo.get();
   win.webContents.send('network-info', info);
+});
+
+ipcMain.on('get-cpu-info', async () => {
+  const info = await cpu.info.get();
+  win.webContents.send('cpu-info', info);
 });

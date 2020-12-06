@@ -11,6 +11,7 @@
         <v-card flat>
           <SystemInfo v-if="tab === 'System Info'" />
           <NetworkInfo v-if="tab === 'Network Info'" />
+          <CPUInfo v-if="tab === 'CPU Info'" />
         </v-card>
       </v-tab-item>
     </v-tabs-items>
@@ -20,7 +21,7 @@
 <script>
 import SystemInfo from "./SystemInfo";
 import NetworkInfo from "./NetworkInfo";
-// import CPUInfo from './CPUInfo';
+import CPUInfo from './CPUInfo';
 // import CPUTemp from './CPUTemp';
 
 export default {
@@ -28,7 +29,7 @@ export default {
   components: {
     SystemInfo,
     NetworkInfo,
-    // CPUInfo,
+    CPUInfo,
     // CPUTemp
   },
   data: () => ({
