@@ -12,6 +12,7 @@
           <SystemInfo v-if="tab === 'System Info'" />
           <NetworkInfo v-if="tab === 'Network Info'" />
           <CPUInfo v-if="tab === 'CPU Info'" />
+          <CPUTemp v-if="tab === 'CPU Temperature'" />
         </v-card>
       </v-tab-item>
     </v-tabs-items>
@@ -22,7 +23,7 @@
 import SystemInfo from "./SystemInfo";
 import NetworkInfo from "./NetworkInfo";
 import CPUInfo from './CPUInfo';
-// import CPUTemp from './CPUTemp';
+import CPUTemp from './CPUTemp';
 
 export default {
   name: "System",
@@ -30,7 +31,7 @@ export default {
     SystemInfo,
     NetworkInfo,
     CPUInfo,
-    // CPUTemp
+    CPUTemp
   },
   data: () => ({
     datasets: {},

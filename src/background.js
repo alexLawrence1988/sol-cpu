@@ -120,3 +120,8 @@ ipcMain.on('get-cpu-info', async () => {
   const info = await cpu.info.get();
   win.webContents.send('cpu-info', info);
 });
+
+ipcMain.on('get-cpu-temp', async () => {
+  const info = await cpu.temperature.get();
+  win.webContents.send('cpu-temp', info);
+});
