@@ -20,8 +20,8 @@
         <span>{{ val }}</span>
       </v-col>
     </v-row>
-    <v-overlay v-show="loading"  absolute>
-          <v-progress-circular fixed color="primary" indeterminate />
+    <v-overlay v-show="loading" absolute>
+      <v-progress-circular fixed color="primary" indeterminate />
     </v-overlay>
   </div>
 </template>
@@ -34,12 +34,12 @@ export default {
   methods: {
     getInfo() {
       this.loading = true;
-      window.ipcRenderer.send("get-network-info");
+      window.ipcRenderer.send("get-memory-info");
     },
   },
   created() {
-    window.ipcRenderer.on("network-info", (event, data) => {
-      this.info = data[0];
+    window.ipcRenderer.on("memory-info", (event, data) => {
+      this.info = data;
       this.loading = false;
     });
 

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-tabs v-model="selectedTab" background-color="transparent" color="basil" grow>
+    <v-tabs v-model="selectedTab" background-color="transparent" color="primary" grow>
       <v-tab v-for="tab in tabs" :key="tab">
         {{ tab }}
       </v-tab>
@@ -13,6 +13,7 @@
           <NetworkInfo v-if="tab === 'Network Info'" />
           <CPUInfo v-if="tab === 'CPU Info'" />
           <CPUTemp v-if="tab === 'CPU Temperature'" />
+          <MemoryInfo v-if="tab === 'Memory Info'" />
         </v-card>
       </v-tab-item>
     </v-tabs-items>
@@ -25,6 +26,7 @@ import SystemInfo from "./SystemInfo";
 import NetworkInfo from "./NetworkInfo";
 import CPUInfo from "./CPUInfo";
 import CPUTemp from "./CPUTemp";
+import MemoryInfo from "./MemoryInfo";
 
 export default {
   name: "System",
@@ -33,16 +35,16 @@ export default {
     NetworkInfo,
     CPUInfo,
     CPUTemp,
+    MemoryInfo
   },
   data: () => ({
     datasets: {},
     selectedTab: 0,
-    tabs: ["System Info", "Network Info", "CPU Info", "CPU Temperature"],
+    tabs: ["System Info", "Network Info", "CPU Info", "CPU Temperature", "Memory Info"],
   }),
 };
 </script>
 <style scoped>
-
 .tab-content {
   height: calc(100vh - 285px);
   overflow: auto;

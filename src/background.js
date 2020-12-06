@@ -6,6 +6,7 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import systemInfo from './helpers/system';
 import networkInfo from './helpers/network';
 import cpu from './helpers/cpu';
+import memoryInfo from './helpers/memory';
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const path = require('path')
@@ -29,7 +30,7 @@ async function createWindow() {
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: true,
+      nodeIntegration: false,
       preload: path.join(__dirname, 'preload.js'),
       enableRemoteModule: true
     }
@@ -112,6 +113,11 @@ const getCPUSpeed = async () => {
   win.webContents.send('cpu-speed', info);
 }
 
+const getMemoryInfo = async () => {
+  const info = await memoryInfo.get();
+  win.webContents.send('memory-info', info);
+} 
+
 // IPC event bus handlers
 ipcMain.on('quit', () => {
   app.exit();
@@ -147,6 +153,6 @@ ipcMain.on('get-cpu-temp', async () => {
 });
 
 // Poll system info
-setInterval(getNetworkInfo, 1000);
-setInterval(getCPUSpeed, 1000);
-setInterval(getCPUTemp, 1000);
+setInterval(getNetworkInfo, 2000);
+setInterval(getCPUSpeed, 10000);
+setInterval(getMemoryInfo, 2000);

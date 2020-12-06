@@ -58,7 +58,7 @@ export default {
 
   components: {
     System,
-    Weather
+    Weather,
   },
 
   data: () => ({
