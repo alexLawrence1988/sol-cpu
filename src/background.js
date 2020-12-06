@@ -4,6 +4,7 @@ import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import systemInfo from './workers/system';
+import networkInfo from './workers/network';
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const path = require('path')
@@ -40,10 +41,6 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
-
-  const system = await systemInfo.get()
-  win.webContents.send('system-info', system);
-
 }
 
 // Quit when all windows are closed.
@@ -108,4 +105,12 @@ ipcMain.on('restore', () => {
   win.restore();
 });
 
+ipcMain.on('get-system-info', async () => {
+  const info = await systemInfo.get();
+  win.webContents.send('system-info', info);
+});
 
+ipcMain.on('get-network-info', async () => {
+  const info = await networkInfo.get();
+  win.webContents.send('network-info', info);
+});

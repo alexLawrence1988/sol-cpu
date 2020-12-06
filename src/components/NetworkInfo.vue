@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="scroll">
     <v-row no-gutters>
       <v-spacer />
       <v-btn icon @click="getInfo()">
@@ -34,13 +34,13 @@ export default {
   methods: {
     getInfo() {
       this.loading = true;
-      window.ipcRenderer.send("get-system-info");
+      window.ipcRenderer.send("get-network-info");
     },
   },
   created() {
-    window.ipcRenderer.on("system-info", (event, data) => {
+    window.ipcRenderer.on("network-info", (event, data) => {
       console.log(data);
-      this.info = data;
+      this.info = data[0];
       this.loading = false;
     });
 
@@ -48,3 +48,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.scroll {
+  overflow-y: auto;
+}
+</style>

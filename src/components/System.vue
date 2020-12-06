@@ -1,13 +1,16 @@
 <template>
   <v-container>
-    <v-tabs fixed-tabs>
-      <v-tab v-for="(tab, i) in tabs" :key="i"> {{ tab }} </v-tab>
+    <v-tabs v-model="selectedTab" background-color="transparent" color="basil" grow>
+      <v-tab v-for="tab in tabs" :key="tab">
+        {{ tab }}
+      </v-tab>
     </v-tabs>
-    <v-tabs-items v-model="tab">
+
+    <v-tabs-items v-model="selectedTab">
       <v-tab-item v-for="tab in tabs" :key="tab">
         <v-card flat>
           <SystemInfo v-if="tab === 'System Info'" />
-
+          <NetworkInfo v-if="tab === 'Network Info'" />
         </v-card>
       </v-tab-item>
     </v-tabs-items>
@@ -15,8 +18,8 @@
 </template>
 
 <script>
-import SystemInfo from './SystemInfo';
-// import NetworkInfo from './NetworkInfo';
+import SystemInfo from "./SystemInfo";
+import NetworkInfo from "./NetworkInfo";
 // import CPUInfo from './CPUInfo';
 // import CPUTemp from './CPUTemp';
 
@@ -24,19 +27,14 @@ export default {
   name: "System",
   components: {
     SystemInfo,
-    // NetworkInfo,
+    NetworkInfo,
     // CPUInfo,
     // CPUTemp
   },
   data: () => ({
     datasets: {},
-    tab: 0,
-    tabs: [
-      "System Info",
-      "Network Info",
-      "CPU Info",
-      "CPU Temperature",
-    ],
+    selectedTab: 0,
+    tabs: ["System Info", "Network Info", "CPU Info", "CPU Temperature"],
   }),
 };
 </script>
