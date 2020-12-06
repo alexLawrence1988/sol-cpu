@@ -1,4 +1,9 @@
-# solcpu
+# Sol-CPU
+
+##
+Electron application which reads system information as well as the local weather. Location is calculated with the google geolocation API, and the map view consumes the javascript map API.
+
+![Sol-CPU](https://i.ibb.co/CPtqWLQ/sol-cpu.png)
 
 ## Project setup
 ```
