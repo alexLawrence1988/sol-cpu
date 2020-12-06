@@ -3,6 +3,8 @@
 import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
+import systemInfo from './workers/system';
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const path = require('path')
 let win;
@@ -19,6 +21,7 @@ async function createWindow() {
     height: 600,
     titleBarStyle: 'hidden',
     frame: false,
+    resizable: true,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
@@ -37,6 +40,10 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
+
+  const system = await systemInfo.get()
+  win.webContents.send('system-info', system);
+
 }
 
 // Quit when all windows are closed.
@@ -84,10 +91,21 @@ if (isDevelopment) {
   }
 }
 
+// IPC event bus handlers
 ipcMain.on('quit', () => {
-  try {
-    app.exit();
-  } catch (err) {
-    console.error(err)
-  }
-})
+  app.exit();
+});
+
+ipcMain.on('minimize', () => {
+  win.minimize();
+});
+
+ipcMain.on('maximize', () => {
+  win.maximize();
+});
+
+ipcMain.on('restore', () => {
+  win.restore();
+});
+
+

@@ -10,25 +10,37 @@
           transition="scale-transition"
           width="40"
         />
-
       </div>
 
       <v-spacer></v-spacer>
 
-      <v-btn class="no-drag" icon text @click="confirmQuitDialog = true">
+      <v-btn class="no-drag" icon @click="ipcSend('minimize')">
+        <v-icon>mdi-window-minimize</v-icon>
+      </v-btn>
+      <v-btn class="no-drag" icon @click="maximize()">
+        <v-icon>mdi-window-maximize</v-icon>
+      </v-btn>
+      <v-btn class="no-drag" icon @click="confirmQuitDialog = true">
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-app-bar>
 
     <v-main>
-      <Main />
+      <System />
       <v-dialog v-model="confirmQuitDialog">
         <v-card>
           <v-card-title> Are you sure you want to quit? </v-card-title>
           <v-row no-gutters class="pa-3">
             <v-spacer />
-            <v-btn text outlined class="pr-5" color="error" @click="confirmQuitDialog = false">Cancel </v-btn>
-            <v-btn text outlined color="primary" @click="exitProgram()">Quit </v-btn>
+            <v-btn
+              text
+              outlined
+              class="pr-5"
+              color="error"
+              @click="confirmQuitDialog = false"
+              >Cancel
+            </v-btn>
+            <v-btn text outlined color="primary" @click="ipcSend('quit')">Quit </v-btn>
           </v-row>
         </v-card>
       </v-dialog>
@@ -37,22 +49,28 @@
 </template>
 
 <script>
-import Main from "./components/Main";
+import System from "./components/System";
 
 export default {
   name: "App",
 
   components: {
-    Main,
+    System,
   },
 
   data: () => ({
     confirmQuitDialog: false,
+    maximized: false
   }),
   methods: {
-    exitProgram() {
-      window.ipcRenderer.send('quit');
+    ipcSend(event) {
+      window.ipcRenderer.send(event);
     },
+    maximize(){
+      const event = this.maximized ? 'restore' : 'maximize';
+      this.ipcSend(event);
+      this.maximized = !this.maximized;
+    }
   },
 };
 </script>
@@ -62,6 +80,7 @@ export default {
 }
 
 .no-drag {
- -webkit-app-region: no-drag;
+  -webkit-app-region: no-drag;
 }
+
 </style>
