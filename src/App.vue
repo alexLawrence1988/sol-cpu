@@ -9,18 +9,19 @@
           src="https://www.cputemper.com/wp-content/uploads/sites/2/2018/03/cputemper-icon-1.png"
           transition="scale-transition"
           width="40"
+          id="img-logo"
         />
       </div>
 
       <v-spacer></v-spacer>
 
-      <v-btn class="no-drag" icon @click="ipcSend('minimize')">
+      <v-btn id="btn-minimize" class="no-drag" icon @click="ipcSend('minimize')">
         <v-icon>mdi-window-minimize</v-icon>
       </v-btn>
-      <v-btn class="no-drag" icon @click="maximize()">
+      <v-btn id="btn-maximize" class="no-drag" icon @click="maximize()">
         <v-icon>mdi-window-maximize</v-icon>
       </v-btn>
-      <v-btn class="no-drag" icon @click="confirmQuitDialog = true">
+      <v-btn id="btn-quit" class="no-drag" icon @click="confirmQuitDialog = true">
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-app-bar>
@@ -28,7 +29,7 @@
     <v-main>
       <System />
       <Weather />
-      <v-dialog v-model="confirmQuitDialog">
+      <v-dialog id="dialog-confirm-quit" v-model="confirmQuitDialog">
         <v-card>
           <v-card-title> Are you sure you want to quit? </v-card-title>
           <v-row no-gutters class="pa-3">
@@ -41,7 +42,7 @@
               @click="confirmQuitDialog = false"
               >Cancel
             </v-btn>
-            <v-btn text outlined color="primary" @click="ipcSend('quit')">Quit </v-btn>
+            <v-btn id="btn-quit-app" text outlined color="primary" @click="ipcSend('quit')">Quit </v-btn>
           </v-row>
         </v-card>
       </v-dialog>

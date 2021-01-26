@@ -8,10 +8,13 @@ import networkInfo from './helpers/network';
 import cpu from './helpers/cpu';
 import memoryInfo from './helpers/memory';
 
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const path = require('path')
 // For google api access (geolocation etc)
 process.env.GOOGLE_API_KEY = 'AIzaSyAeCOiuqOZdAf70NbERwoWt2Ao6Iuoo5Z8'
+
+
 
 let win;
 
@@ -26,11 +29,12 @@ async function createWindow() {
     width: 800,
     height: 600,
     titleBarStyle: 'hidden',
+    title: 'SolCPU',
     frame: false,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: false,
+      nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),
       enableRemoteModule: true
     }
@@ -39,7 +43,7 @@ async function createWindow() {
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-    if (!process.env.IS_TEST) win.webContents.openDevTools()
+    // if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
     createProtocol('app')
     // Load the index.html when not in development
