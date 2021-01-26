@@ -1,7 +1,7 @@
 <template>
   <div>
     <br />
-    <gmap-map :center="center" :zoom="13" style="width: 100%; height: 110px">
+    <gmap-map id="map-location" :center="center" :zoom="13" style="width: 100%; height: 110px">
       <gmap-marker
         :key="index"
         v-for="(m, index) in markers"
